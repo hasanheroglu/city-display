@@ -1,6 +1,9 @@
-name: CI-CD City Service
+name: CI-CD City Service Backend
 
-on: [push]
+on: 
+  push:
+    paths:
+      - 'backend/**'
 
 jobs:
   build:
@@ -12,6 +15,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
+      - run: cd backend
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
