@@ -5,6 +5,10 @@ on:
     paths:
       - 'backend/**'
 
+defaults:
+  run:
+    working-directory: backend
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +19,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-      - run: cd backend
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
