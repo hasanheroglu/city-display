@@ -1,14 +1,14 @@
+import { CityList } from "../data/data";
 import { City } from "../entity/city.entity";
 import { ICityRepository } from "./city.repository.interface";
-
 export class CityRepositoryJSON implements ICityRepository {
     getAll(): City[] {
-        throw new Error("Method not implemented.");
+        return CityList;
     }
     getById(id: number): City {
-        throw new Error("Method not implemented.");
+        return CityList[id];
     }
     getByName(name: string): City {
-        throw new Error("Method not implemented.");
+        return CityList.filter((c) => name === c.name)[0];
     }
 }
