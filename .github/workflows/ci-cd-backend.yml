@@ -3,6 +3,7 @@ name: CI-CD City Service Backend
 on: 
   push:
     paths:
+      - './.github/workflows'
       - 'backend/**'
 
 defaults:
