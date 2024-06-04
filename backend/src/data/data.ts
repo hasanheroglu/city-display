@@ -1,5 +1,5 @@
 import { City } from '../entity/city.entity';
-import citiesJSON from './cities.json';
+import citiesJSON from './cities.json'; 
 
 export const CityList: City[] = citiesJSON.cities.map((c) => {
     return {
