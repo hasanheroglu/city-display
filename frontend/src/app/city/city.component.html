@@ -1,0 +1,9 @@
+<section class="city-main">
+    <div class="left-side">
+        <app-city-card
+            *ngFor="let city of cityList"
+            [city]="city"
+        ></app-city-card>
+    </div>
+    <div class="right-side" id="map-canvas-container"></div>
+</section>

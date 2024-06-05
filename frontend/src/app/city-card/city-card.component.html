@@ -1,0 +1,11 @@
+<section [id]="city.name" class="section">
+    <p>Name: {{ city.name }} </p>
+    <p>Native: {{ city.name_native }} </p>
+    <p>Country: {{ city.country }} </p>
+    <p>Continent: {{ city.continent }} </p>
+    <p>Lat: {{ city.latitude }} </p>
+    <p>Lon: {{ city.longitude }} </p>
+    <p>Founded: {{ city.founded }} </p>
+    <p>Landmarks: {{ city.landmarks }} </p>
+    <button (click)="changeGlobePOV(city.latitude, city.longitude, 1000)">Go</button>
+</section>

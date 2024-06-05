@@ -1,0 +1,16 @@
+.city-main {
+    display: flex;
+    flex-direction: row;
+    padding: 250px;
+}
+
+.left-side {
+    width: 50%;
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.right-side {
+    width: 50%;
+    height: 600px;
+}
