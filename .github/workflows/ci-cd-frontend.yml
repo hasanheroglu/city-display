@@ -1,14 +1,14 @@
-name: CI-CD City Service Backend
+name: CI-CD City Service Frontend
 
 on: 
   push:
     paths:
-      - '.github/workflows/ci-cd-backend.yml'
-      - 'backend/**'
+      - '.github/workflows/ci-cd-frontend.yml'
+      - 'frontend/**'
 
 defaults:
   run:
-    working-directory: backend
+    working-directory: frontend
 
 jobs:
   build:
@@ -21,4 +21,4 @@ jobs:
         with:
           node-version: '20.x'
       - run: npm ci
-      - run: npm run start & npm test
+      - run: npm run test
