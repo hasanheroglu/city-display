@@ -7,5 +7,5 @@ export class City {
     longitude!: number;
     population!: number;
     founded!: number;
-    landmarks!: String[];
+    landmarks!: string[];
 }
