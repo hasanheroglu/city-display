@@ -1,9 +1,12 @@
-<section class="city-main">
+<div class="city-main">
     <div class="left-side">
         <app-city-card
             *ngFor="let city of cityList"
             [city]="city"
+            (citySelected)="setSelectedCity($event)"
         ></app-city-card>
     </div>
-    <div class="right-side" id="map-canvas-container"></div>
-</section>
+    <div class="right-side">
+        <app-map [city]="selectedCity"></app-map>
+    </div>
+</div>

@@ -14,7 +14,7 @@ export class CityService {
     if (res.ok) {
       return (await res.json()) ?? [];
     } else {
-      console.log(res.status)
+      console.error(res.status)
     }
 
     return [];
