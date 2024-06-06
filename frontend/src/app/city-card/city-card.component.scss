@@ -1,12 +1,13 @@
 .city-card-main {
     color: white;
-    background-color: #B26E63;
-    border: 1px solid #654C4F;
+    color: black;
+    background-color: #e7e8ead7;
     border-radius: 5px;
     margin-bottom: 2px;
     padding-left: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(71, 69, 69, 0.06);
 }
 
 .city-card-main:hover {
-    background-color: #b26d63c7;
+    background-color: #e7e8ea43;
 }

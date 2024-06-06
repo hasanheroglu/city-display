@@ -48,8 +48,9 @@ export class MapComponent implements OnChanges, AfterViewInit {
   
   private initMap(): void {
     this.map = L.map('map', {
-      center: [ 0, 0 ],
-      zoom: 10,
+      center: [ 48.14153366463452, 11.567955852674897 ],
+      zoom: 13,
+      zoomControl: false
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -1,12 +1,13 @@
 <div class="city-main">
-    <div class="left-side">
-        <app-city-card
-            *ngFor="let city of cityList"
-            [city]="city"
-            (citySelected)="setSelectedCity($event)"
-        ></app-city-card>
+    <div class="city-nav-bg">
+        <div class="city-btns">
+            <app-city-card
+                *ngFor="let city of cityList"
+                [city]="city"
+                (citySelected)="setSelectedCity($event)"
+            ></app-city-card>
+        </div>
     </div>
-    <div class="right-side">
-        <app-map [city]="selectedCity"></app-map>
-    </div>
+    
+    <app-map [city]="selectedCity"></app-map>
 </div>

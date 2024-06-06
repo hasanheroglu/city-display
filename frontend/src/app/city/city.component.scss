@@ -2,16 +2,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 10%;
 }
 
-.left-side {
-    width: 50%;
-    height: 600px;
-    overflow-y: scroll;
+.city-nav-bg {
+    position: absolute;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    background-color: #7f78788d;
+    z-index: -1;
 }
 
-.right-side {
-    width: 50%;
-    height: 600px;
+.city-btns {
+    position: relative;
+    top: 5%;
+    padding: 10%;
 }
