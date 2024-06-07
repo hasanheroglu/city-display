@@ -2,8 +2,13 @@ import { ICityService } from "../src/service/city.service.interface";
 import { CityService } from "../src/service/city.service.implementation";
 import { City } from "../src/entity/city.entity";
 import { PaginatedResponse } from "../src/response/paginated.response";
+import mongoose from "mongoose";
 
 let cityService: ICityService = new CityService();
+
+afterAll(() => { 
+    mongoose.connection.close();
+});
 
 describe("city service", () => {
     it("should get all cities", async () => {
@@ -44,3 +49,5 @@ describe("city service", () => {
         expect(result.next).toBeUndefined();
     })
 })
+
+

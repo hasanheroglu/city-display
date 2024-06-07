@@ -1,4 +1,9 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
+
+afterAll(() => { 
+    mongoose.connection.close();
+});
 
 describe("city controller", () => {
     it("should get all cities", (done) => {
