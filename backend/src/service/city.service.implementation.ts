@@ -1,19 +1,16 @@
+import { PaginatedResponse } from "../response/paginated.response";
 import { City } from "../entity/city.entity";
 import { ICityRepository } from "../repository/city.repository.interface";
-import { CityRepositoryJSON } from "../repository/city.repository.json";
+import { CityRepositoryMongo } from "../repository/city.repository.mongo";
+import { PageRequest } from "../request/page.request";
 import { ICityService } from "./city.service.interface";
+import { CitySearchRequest } from "../request/city.search.request";
 
 export class CityService implements ICityService {
     
-    cityRepository: ICityRepository = new CityRepositoryJSON();
+    cityRepository: ICityRepository = new CityRepositoryMongo();
 
-    getAll(): City[] {
-        return this.cityRepository.getAll();
-    }
-    getById(id: number): City {
-        return this.cityRepository.getById(id);
-    }
-    getByName(name: string): City {
-        return this.cityRepository.getByName(name);
+    async getAll(citySearch?: CitySearchRequest, page?: PageRequest): Promise<PaginatedResponse<City>> {
+        return await this.cityRepository.getAll(citySearch, page);
     }
 }

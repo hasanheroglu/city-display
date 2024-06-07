@@ -1,7 +1,8 @@
+import { PaginatedResponse } from "../response/paginated.response";
 import { City } from "../entity/city.entity";
+import { PageRequest } from "../request/page.request";
+import { CitySearchRequest } from "../request/city.search.request";
 
 export interface ICityService {
-    getAll(): City[];
-    getById(id: number): City;
-    getByName(name: string): City;
+    getAll(citySearch?: CitySearchRequest, page?: PageRequest): Promise<PaginatedResponse<City>>;
 }
