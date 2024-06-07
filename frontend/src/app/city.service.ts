@@ -9,10 +9,10 @@ import { PaginatedResponse } from './paginated.response';
 })
 export class CityService {
 
-  constructor() { }
+  constructor() {}
 
   async getAll(citySearch?: CitySearchRequest, page?: PageRequest): Promise<PaginatedResponse<City> | undefined> {
-    const baseURL = "http://localhost:3000/api/v1/cities?"
+    const baseURL = `${import.meta.env['NG_APP_CITY_BACKEND_API']}/cities?`
     const citySearchParam = citySearch && citySearch.name ? `&name=${citySearch.name}` : "";
     const pageParam = page ? `&pageNo=${page.no}&pageSize=${page.size}` : "";
 
