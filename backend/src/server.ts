@@ -5,7 +5,6 @@ import { CityRoute } from "./controller/city.controller";
 import dotenv from 'dotenv'
 dotenv.config();
 
-
 const app = express();
 const port = process.env.API_PORT;
 

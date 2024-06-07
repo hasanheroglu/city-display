@@ -15,11 +15,11 @@ export class CityRepositoryMongo implements ICityRepository {
                 $or: [ 
                     { name: { $regex: citySearch.name, $options: 'i' } },
                     { name_native: { $regex: citySearch.name, $options: 'i' } }  
-                ] 
+                ]
             } 
             : {}
         const queryOpts = page ? { skip: (page.no - 1) * page.size, limit: page.size } : undefined;
-        const data: City[] = await CityModel.find(query, null, queryOpts);
+        const data: City[] = await CityModel.find(query, null, queryOpts).sort({ name: 1 });
         
         const totalDocuments = await CityModel.countDocuments(query);
         const pages = page ? Math.ceil(totalDocuments / page.size) : 1;
