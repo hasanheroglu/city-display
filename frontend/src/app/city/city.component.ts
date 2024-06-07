@@ -83,4 +83,12 @@ export class CityComponent implements AfterViewInit, OnDestroy {
       }
     })
   }
+
+  onSearchValueChange() {
+    if (this.searchValue.getRawValue() === "" && this.lastSearchedValue != "") {
+      this.lastSearchedValue = "";
+      this.getCities();
+      this.page.next(1);
+    }
+  }
 }

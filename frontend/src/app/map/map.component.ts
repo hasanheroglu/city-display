@@ -22,9 +22,9 @@ L.Marker.prototype.options.icon = iconDefault;
 
 const redCircleIcon: L.Icon = L.icon({
   iconUrl: 'red-circle.svg',
-  iconSize:     [30, 30], // size of the icon
-  iconAnchor:   [15, 15], // point of the icon which will correspond to marker's location
-  popupAnchor:  [0, -12] // point from which the popup should open relative to the iconAnchor
+  iconSize:     [30, 30],
+  iconAnchor:   [15, 15], 
+  popupAnchor:  [0, -12]
 });
 
 @Component({
@@ -81,7 +81,7 @@ export class MapComponent implements OnChanges, AfterViewInit {
           <div> Country: ${this.city.country} </div>
           <div> Founded: ${this.city.founded} </div>
           <div> Population: ${this.city.population} </div>
-          <div> Landmarks: ${this.city.landmarks} </div>
+          <div> Landmarks: ${this.city.landmarks.toString().replaceAll(',', ', ')} </div>
         `)
         .addTo(this.map);
         
@@ -89,11 +89,19 @@ export class MapComponent implements OnChanges, AfterViewInit {
 
       for (const landmark of this.city.landmarks) {
         const results = await this.mapProvider.search({ query: `${landmark}, ${this.city.name_native}` })
+        // const wikiRes = await fetch(`https://en.wikipedia.org/w/rest.php/v1/search/page?q=${landmark} ${this.city.name}&limit=1`)
+        // const wikiResJson = await wikiRes.json();
+        // let imageUrl = "https:"
+        // if (wikiResJson.pages.length > 0) {
+        //   imageUrl += wikiResJson.pages[0].thumbnail?.url;
+        // } 
 
         if (results.length > 0) { 
           const landmarkMarker = L.marker([results[0].y, results[0].x])
             .bindPopup(`
-              <div> ${landmark} </div>
+              <div> 
+                <p>${landmark}</p>
+              </div>
             `)
             .addTo(this.map);
           this.markers.push(landmarkMarker);

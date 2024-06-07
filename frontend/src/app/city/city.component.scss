@@ -6,6 +6,8 @@
 
 .city-nav-bg {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     left: 0;
     width: 30%;
     height: 100%;
@@ -15,11 +17,22 @@
 
 .city-nav-content {
     position: relative;
+    margin-top: 10%;
+    padding: 0 15% 15% 15%;
+    height: 60%;
+    overflow-y: scroll;
+}
+
+.city-nav-search {
+    position: relative;
     top: 5%;
-    padding: 10%;
+    padding: 5% 15% 5% 15%;
+    position: relative;
+
 }
 
 .search-input {
+    position: relative;
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

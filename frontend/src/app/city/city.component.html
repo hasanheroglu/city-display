@@ -1,7 +1,7 @@
 <div class="city-main">
     <div class="city-nav-bg">
-        <div class="city-nav-content">
-            <input class="search-input" placeholder="Search..." type="text" [formControl]="searchValue" (keyup.enter)="search()">
+        <div class="city-nav-search">
+            <input class="search-input" placeholder="Search..." type="text" [formControl]="searchValue" (ngModelChange)="onSearchValueChange()" (keyup.enter)="search()">
             <div class="page-btns">
                 <button [disabled]="prevPage === undefined" (click)="selectPage(prevPage?.no)"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
@@ -19,15 +19,17 @@
                     </svg>
                 </button>
             </div>
+        </div>
+        <div class="city-nav-content">
             <div class="city-btns">
                 <app-city-card
+                    id="{{ 'city-card-' + city.name.toLowerCase() }}"
                     *ngFor="let city of cityList"
                     [city]="city"
                     (citySelected)="setSelectedCity($event)"
                 ></app-city-card>
             </div>        
         </div>
-        
     </div>
     
     <app-map [city]="selectedCity"></app-map>

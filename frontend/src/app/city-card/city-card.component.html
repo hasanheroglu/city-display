@@ -1,6 +1,8 @@
-<div (click)="selectCity()" class="city-card-main">
-    <h3 *ngIf="city.name === city.name_native; else namesAreDifferent">{{ city.name }}</h3>
+<div (click)="selectCity()">
+    <div *ngIf="city.name === city.name_native; else namesAreDifferent">
+        <h3 class="city-card-main">{{ city.name }}</h3>
+    </div>
     <ng-template #namesAreDifferent>
-        <h3>{{ city.name }} | {{ city.name_native }} </h3>
+        <h3 class="city-card-main">{{ city.name }} - {{ city.name_native }} </h3>
     </ng-template>
 </div>
