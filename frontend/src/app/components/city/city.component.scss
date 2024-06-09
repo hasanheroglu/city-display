@@ -28,7 +28,6 @@
     top: 5%;
     padding: 5% 15% 5% 15%;
     position: relative;
-
 }
 
 .search-input {
@@ -41,7 +40,7 @@
     border-radius: 5px;
     border: none;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.334);
-    background-image: url('../../../public/search-icon.png');
+    background-image: url('../../../../public/search-icon.png');
     background-size: 20px 20px;
     background-position: 10px 10px;
     padding: 12px 20px 12px 40px;
@@ -53,7 +52,7 @@
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    
+
     button {
         border: 1px solid gray;
         width: 25px;
@@ -63,18 +62,17 @@
             background-color: rgba(255, 255, 255, 0.552);
         }
 
-        &:nth-child(n+2) {
+        &:nth-child(n + 2) {
             border-left: none;
         }
     }
 }
 
 .page-btns-middle {
-
     button {
         border-left: none;
 
-        &:is([disabled]){
+        &:is([disabled]) {
             background-color: gray;
             color: white;
         }

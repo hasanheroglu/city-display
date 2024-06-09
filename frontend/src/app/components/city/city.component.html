@@ -1,0 +1,77 @@
+<div class="city-main">
+    <div class="city-nav-bg">
+        <div class="city-nav-search">
+            <input
+                class="search-input"
+                placeholder="Search..."
+                type="text"
+                [formControl]="searchValue"
+                (ngModelChange)="onSearchValueChange()"
+                (keyup.enter)="search()"
+            />
+            <div class="page-btns">
+                <button
+                    [disabled]="prevPage === undefined"
+                    (click)="selectPage(prevPage?.no)"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-chevron-left"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+                        />
+                    </svg>
+                </button>
+                <div class="page-btns-middle">
+                    <button
+                        class="page-btn"
+                        id="{{ 'page-' + (i + 1) }}"
+                        (click)="selectPage(i + 1)"
+                        *ngFor="
+                            let item of [].constructor(pages);
+                            let i = index
+                        "
+                    >
+                        {{ i + 1 }}
+                    </button>
+                </div>
+                <button
+                    [disabled]="nextPage === undefined"
+                    (click)="selectPage(nextPage?.no)"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-chevron-right"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="city-nav-content">
+            <div class="city-btns">
+                <app-city-card
+                    id="{{ 'city-card-' + city.name.toLowerCase() }}"
+                    *ngFor="let city of cityList"
+                    [city]="city"
+                    (citySelected)="setSelectedCity($event)"
+                ></app-city-card>
+            </div>
+        </div>
+    </div>
+
+    <app-map [city]="selectedCity"></app-map>
+</div>

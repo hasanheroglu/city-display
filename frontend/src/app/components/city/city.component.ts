@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core'
 import { CityCardComponent } from '../city-card/city-card.component'
-import { City } from '../model/city/city'
-import { CityService } from '../city.service'
+import { City } from '../../model/city/city'
+import { CityService } from '../../services/city/city.service'
 import { CommonModule } from '@angular/common'
 import { MapComponent } from '../map/map.component'
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
-import { PageRequest } from '../model/request/page.request'
+import { PageRequest } from '../../model/request/page.request'
 import { BehaviorSubject, Subscription } from 'rxjs'
+import { PaginatedResponse } from '../../model/response/paginated.response'
 
 @Component({
     selector: 'app-city',
@@ -83,7 +84,7 @@ export class CityComponent implements AfterViewInit, OnDestroy {
                 { name: this.lastSearchedValue },
                 { no: this.page.getValue(), size: this.pageSize }
             )
-            .then((res) => {
+            .then((res: PaginatedResponse<City> | undefined) => {
                 if (res) {
                     this.cityList = res.data
                     this.pages = res.pages
