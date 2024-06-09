@@ -1,3 +1,3 @@
 export interface CitySearchRequest {
-    name?: string;
+    name?: string
 }

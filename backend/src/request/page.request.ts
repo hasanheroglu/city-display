@@ -1,4 +1,4 @@
 export interface PageRequest {
-    no: number;
-    size: number;
+    no: number
+    size: number
 }

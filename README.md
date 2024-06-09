@@ -21,6 +21,7 @@ Developed with Typescript and Angular. Jasmine and Karma are used for testing. L
 
 ### Backend
 Developed with Typescript, Node.js, Express, and MongoDB. Jest, Supertest, and Docker are used for testing.
+For backend tests, before the run, MongoDB must be started using `./backend/docker-compose.yml`. 
 
 ### Running the app
 Run the command `docker-compose up --build` in the root directory.
