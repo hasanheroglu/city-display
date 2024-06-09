@@ -4,10 +4,10 @@ import { City } from '../city';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { CommonModule } from '@angular/common';
 
-const iconRetinaUrl = 'marker-icon-2x.png';
-const iconUrl = 'marker-icon.png';
-const shadowUrl = 'marker-shadow.png';
-const iconDefault = L.icon({
+const iconRetinaUrl: string = 'marker-icon-2x.png';
+const iconUrl: string = 'marker-icon.png';
+const shadowUrl: string = 'marker-shadow.png';
+const iconDefault: L.Icon = L.icon({
   iconRetinaUrl,
   iconUrl,
   shadowUrl,
@@ -18,7 +18,6 @@ const iconDefault = L.icon({
   shadowSize: [41, 41]
 });
 L.Marker.prototype.options.icon = iconDefault;
-
 
 const redCircleIcon: L.Icon = L.icon({
   iconUrl: 'red-circle.svg',
@@ -35,18 +34,16 @@ const redCircleIcon: L.Icon = L.icon({
   styleUrl: './map.component.scss'
 })
 export class MapComponent implements OnChanges, AfterViewInit {
-  
   @Input() city?: City;
-
-  private map: L.Map | undefined;
-  private mapProvider: OpenStreetMapProvider = new OpenStreetMapProvider();
-  private markers: L.Marker[] = [];
   
+  mapProvider: OpenStreetMapProvider = new OpenStreetMapProvider();
+  map: L.Map | undefined;
+  markers: L.Marker[] = [];
   isMapLoading: boolean = false;
 
   constructor() {}
   
-  private initMap(): void {
+  initMap(): void {
     this.map = L.map('map', {
       center: [ 48.14153366463452, 11.567955852674897 ],
       zoom: 13,
@@ -68,12 +65,31 @@ export class MapComponent implements OnChanges, AfterViewInit {
       this.isMapLoading = true;
     }
 
+    this.removeMarkers();
+
+    if (this.map && this.city) {
+      const cityMarker = this.addCityMarker();
+      await this.addLandmarkMarkers();
+
+      this.isMapLoading = false;
+      this.map?.flyTo([this.city.latitude, this.city.longitude], 13, { animate: true, duration: 3});
+      
+      if (cityMarker) {
+        cityMarker.openPopup();
+      }
+    }
+  }
+
+  removeMarkers() {
     if (this.map && this.markers.length > 0) {
       for (const marker of this.markers) {
         this.map.removeLayer(marker);
       }
+      this.markers.length = 0;
     }
+  }
 
+  addCityMarker(): L.Marker | undefined {
     if (this.map && this.city) {
       const cityMarker = L.marker([this.city.latitude, this.city.longitude], { icon: redCircleIcon })
         .bindPopup(`
@@ -84,18 +100,19 @@ export class MapComponent implements OnChanges, AfterViewInit {
           <div> Landmarks: ${this.city.landmarks.toString().replaceAll(',', ', ')} </div>
         `)
         .addTo(this.map);
-        
+      this.markers?.push(cityMarker);
 
+      return cityMarker;
+    }
 
+    return;
+  }
+
+  async addLandmarkMarkers() {
+    if (this.map && this.city) {
       for (const landmark of this.city.landmarks) {
-        const results = await this.mapProvider.search({ query: `${landmark}, ${this.city.name_native}` })
-        // const wikiRes = await fetch(`https://en.wikipedia.org/w/rest.php/v1/search/page?q=${landmark} ${this.city.name}&limit=1`)
-        // const wikiResJson = await wikiRes.json();
-        // let imageUrl = "https:"
-        // if (wikiResJson.pages.length > 0) {
-        //   imageUrl += wikiResJson.pages[0].thumbnail?.url;
-        // } 
-
+        const results = await this.mapProvider.search({ query: `${landmark}, ${this.city.name_native}` });
+        
         if (results.length > 0) { 
           const landmarkMarker = L.marker([results[0].y, results[0].x])
             .bindPopup(`
@@ -107,12 +124,6 @@ export class MapComponent implements OnChanges, AfterViewInit {
           this.markers.push(landmarkMarker);
         }
       }
-
-      this.isMapLoading = false;
-      this.markers?.push(cityMarker);
-      this.map?.flyTo([this.city.latitude, this.city.longitude], 13, { animate: true, duration: 3});
-      cityMarker.openPopup();
-
     }
   }
 

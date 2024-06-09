@@ -35,4 +35,12 @@ describe('CityCardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit event with the city', () => {
+    spyOn(component.citySelected, 'emit');
+    
+    component.selectCity();
+    fixture.detectChanges();
+    expect(component.citySelected.emit).toHaveBeenCalledOnceWith(component.city);
+  })
 });

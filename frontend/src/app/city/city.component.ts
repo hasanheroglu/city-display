@@ -17,7 +17,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 
 export class CityComponent implements AfterViewInit, OnDestroy {
-  cityService: CityService = inject(CityService);
+  private cityService: CityService = inject(CityService);
   selectedCity: City | undefined;
   cityList: City[] = [];
   searchValue = new FormControl("");
@@ -51,7 +51,7 @@ export class CityComponent implements AfterViewInit, OnDestroy {
   }
 
   selectPage(page?: number) {
-    if (!page) return;
+    if (page === undefined || page > this.pages || page <= 0) return;
 
     this.page.next(page);
     this.getCities();
@@ -74,14 +74,15 @@ export class CityComponent implements AfterViewInit, OnDestroy {
   }
 
   getCities() {
-    this.cityService.getAll({ name: this.lastSearchedValue }, { no: this.page.getValue(), size: this.pageSize }).then((res) => {
-      if (res) {
-        this.cityList = res.data;
-        this.pages = res.pages;
-        this.prevPage = res.prev;
-        this.nextPage = res.next;
-      }
-    })
+    this.cityService.getAll({ name: this.lastSearchedValue }, { no: this.page.getValue(), size: this.pageSize })
+      .then((res) => {
+        if (res) {
+          this.cityList = res.data;
+          this.pages = res.pages;
+          this.prevPage = res.prev;
+          this.nextPage = res.next;
+        }
+      })
   }
 
   onSearchValueChange() {
