@@ -8,6 +8,21 @@ describe('MapComponent', () => {
   let component: MapComponent;
   let fixture: ComponentFixture<MapComponent>;
   let mapProviderSpyObj: jasmine.SpyObj<OpenStreetMapProvider>;
+  const city = {
+    "name": "Sydney",
+    "name_native": "Sydney",
+    "country": "Australia",
+    "continent": "Australia",
+    "latitude": -33.865143,
+    "longitude": 151.209900,
+    "population": 5312000,
+    "founded": 1788,
+    "landmarks": [
+      "Sydney Opera House",
+      "Sydney Harbour Bridge",
+      "Queen Victoria Building"
+    ]
+  };
 
   beforeEach(async () => {
     mapProviderSpyObj = jasmine.createSpyObj("MapProvider", ['search']);
@@ -47,22 +62,6 @@ describe('MapComponent', () => {
 
   describe("on city change", () => {
     it("should add city marker and landmark markers", async () => {
-      const city = {
-        "name": "Sydney",
-        "name_native": "Sydney",
-        "country": "Australia",
-        "continent": "Australia",
-        "latitude": -33.865143,
-        "longitude": 151.209900,
-        "population": 5312000,
-        "founded": 1788,
-        "landmarks": [
-          "Sydney Opera House",
-          "Sydney Harbour Bridge",
-          "Queen Victoria Building"
-        ]
-      }
-
       component.city = city;
       await component.ngOnChanges({
         city: new SimpleChange(null, city, false)
@@ -73,6 +72,24 @@ describe('MapComponent', () => {
         expect(mapProviderSpyObj.search).toHaveBeenCalledWith({ query: `${l}, ${city.name_native}`}); 
       });
       expect(mapProviderSpyObj.search).toHaveBeenCalledTimes(3);
+    });
+    
+    it("should add city marker, landmark markers and remove existing markers on demand", async () => {
+      component.city = city;
+      await component.ngOnChanges({
+        city: new SimpleChange(null, city, false)
+      });
+      fixture.detectChanges();
+
+      expect(component.markers.length).toBe(4);
+      city.landmarks.forEach(l => { 
+        expect(mapProviderSpyObj.search).toHaveBeenCalledWith({ query: `${l}, ${city.name_native}`}); 
+      });
+
+      component.removeMarkers();
+      fixture.detectChanges();
+
+      expect(component.markers.length).toBe(0);
     });
   })
 

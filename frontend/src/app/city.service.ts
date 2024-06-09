@@ -16,12 +16,16 @@ export class CityService {
     const citySearchParam = citySearch && citySearch.name ? `&name=${citySearch.name}` : "";
     const pageParam = page ? `&pageNo=${page.no}&pageSize=${page.size}` : "";
 
-    const res: Response = await fetch(baseURL + citySearchParam + pageParam)
+    let res: Response
+    
+    try {
+      res = await fetch(baseURL + citySearchParam + pageParam);
 
-    if (res.ok) {
-      return (await res.json()) ?? {};
-    } else {
-      console.error(res.status)
+      if (res.ok) {
+        return (await res.json()) ?? undefined;
+      } 
+    } catch (err) {
+      console.error(err);
     }
 
     return undefined;

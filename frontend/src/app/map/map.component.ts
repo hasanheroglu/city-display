@@ -38,10 +38,13 @@ export class MapComponent implements OnChanges, AfterViewInit {
   
   mapProvider: OpenStreetMapProvider = new OpenStreetMapProvider();
   map: L.Map | undefined;
-  markers: L.Marker[] = [];
-  isMapLoading: boolean = false;
+  markers: L.Marker[];
+  isMapLoading: boolean;
 
-  constructor() {}
+  constructor() {
+    this.markers = [];
+    this.isMapLoading = false;
+  }
   
   initMap(): void {
     this.map = L.map('map', {
@@ -89,40 +92,34 @@ export class MapComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  addCityMarker(): L.Marker | undefined {
-    if (this.map && this.city) {
-      const cityMarker = L.marker([this.city.latitude, this.city.longitude], { icon: redCircleIcon })
+  addCityMarker(): L.Marker {
+    const cityMarker = L.marker([this.city!.latitude, this.city!.longitude], { icon: redCircleIcon })
         .bindPopup(`
-          <div> Continent: ${this.city.continent} </div>
-          <div> Country: ${this.city.country} </div>
-          <div> Founded: ${this.city.founded} </div>
-          <div> Population: ${this.city.population} </div>
-          <div> Landmarks: ${this.city.landmarks.toString().replaceAll(',', ', ')} </div>
+          <div> Continent: ${this.city!.continent} </div>
+          <div> Country: ${this.city!.country} </div>
+          <div> Founded: ${this.city!.founded} </div>
+          <div> Population: ${this.city!.population} </div>
+          <div> Landmarks: ${this.city!.landmarks.toString().replaceAll(',', ', ')} </div>
         `)
-        .addTo(this.map);
+        .addTo(this.map!);
       this.markers?.push(cityMarker);
 
       return cityMarker;
-    }
-
-    return;
   }
 
   async addLandmarkMarkers() {
-    if (this.map && this.city) {
-      for (const landmark of this.city.landmarks) {
-        const results = await this.mapProvider.search({ query: `${landmark}, ${this.city.name_native}` });
-        
-        if (results.length > 0) { 
-          const landmarkMarker = L.marker([results[0].y, results[0].x])
-            .bindPopup(`
-              <div> 
-                <p>${landmark}</p>
-              </div>
-            `)
-            .addTo(this.map);
-          this.markers.push(landmarkMarker);
-        }
+    for (const landmark of this.city!.landmarks) {
+      const results = await this.mapProvider.search({ query: `${landmark}, ${this.city!.name_native}` });
+      
+      if (results.length > 0) { 
+        const landmarkMarker = L.marker([results[0].y, results[0].x])
+          .bindPopup(`
+            <div> 
+              <p>${landmark}</p>
+            </div>
+          `)
+          .addTo(this.map!);
+        this.markers.push(landmarkMarker);
       }
     }
   }
